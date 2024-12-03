@@ -58,6 +58,22 @@ class LoginController extends Controller
         return response("登録が完了しました。<a href='/login'>前のページへ戻る</a>");
     }
 
+    //サインアップ
+    public function sign_up(Request $request)
+    {
+        $id = $request->input("id");
+        $password = $request->input("password");
+
+        $record = DB::connection('mysql')->select("select * form users where id_str  '" . $id . "' and password = '" . $password . "'");
+        if (count($records) == 0) {
+            return response("処理中に問題が発生しました。<a href='/login'>前のページへ戻る</a>");
+        }
+
+        $request->session()->put("login_id", $records[0]->id);
+        return response("ログインが完了しました。<a href='/login'>前のページへ戻る</a>");
+    }
+
+
     // ログアウト処理
     public function unregister(Request $request)
     {

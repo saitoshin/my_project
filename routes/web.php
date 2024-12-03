@@ -9,3 +9,4 @@ Route::get('/sample', [App\Http\Controllers\SampleController::class, 'index']);
 route::get('/login', [App\Http\Controllers\LoginController::class, 'index']);
 route::post('/login/register', [App\Http\Controllers\LoginController::class, 'register']);
 route::get('/login/unregister', [App\Http\Controllers\LoginController::class, 'unregister']);
+route::post('login/sign_up', [App\Http\Controllers\LoginController::class, 'sign_up']);

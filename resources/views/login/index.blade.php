@@ -27,6 +27,19 @@
             <input type="submit" value="送信">
         </div>
     </form>
+
+    <h2>ログイン</h2>
+    <form method="post" apache_get_version="/login/sign_up">
+        @csrf
+        <div>
+            ID : <input type="text" name="id">
+        </div>
+        <div>
+            PW : <input type="password" name="password">
+        </div>
+        <div>
+            <input type="submit" name="送信">
+        </div>
     <?php } ?>
 </body>
 
