@@ -7,19 +7,19 @@ use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
-    // 最初の画面
+    // 最初の登録画面
     public function index(Request $request)
     {
         // 非ログイン時はアカウント登録フォーム、ログイン時はログアウトボタンを表示するといった切り替えのため session に保存された login_id を取得
-        $loginId = $request->session()->get( "login_id" , null);
+        $loginId = $request->session()->get("login_id", null);
         $variables = [
-            "isLoginActive" => isset( $loginId )
+            "isLoginActive" => isset($loginId)
         ];
 
-        return view("login/index", compact( "variables" ) );
+        return view("login/index", compact("variables"));
     }
 
-    // アカウント登録処理
+    // ログイン処理
     public function register(Request $request)
     {
         // form からの入力情報の取得
@@ -42,10 +42,10 @@ class LoginController extends Controller
         }
 
         // ここまで正常に処理が進んだら既存のレコードも存在しないため、入力情報をもとにレコードを追加する。
-        DB::connection("mysql")->insert("insert into users (id_str,password) values ('" . $id . "','" . $password . "')");
+        DB::connection("mysql")->insert("insert into users (id,password) values ('" . $id . "','" . $password . "')");
 
         // ログイン id を取得するため、保存したレコード情報を取得する。
-        $records = DB::connection('mysql')->select("select * from users where id_str = '" . $id . "'");
+        $records = DB::connection('mysql')->select("select * from users where id = '" . $id . "'");
 
         // record が取得できなかったら何らかのエラーが発生しているため処理を終了する。
         if (count($records) == 0) {
@@ -53,18 +53,18 @@ class LoginController extends Controller
         }
 
         // session にログインしている user id を保存
-        $request->session()->put( "login_id", $records[0]->id );
+        $request->session()->put("login_id", $records[0]->id);
 
         return response("登録が完了しました。<a href='/login'>前のページへ戻る</a>");
     }
 
-    //サインアップ
-    public function sign_up(Request $request)
+    // 追加
+    public function sign_in(Request $request)
     {
         $id = $request->input("id");
         $password = $request->input("password");
 
-        $record = DB::connection('mysql')->select("select * form users where id_str  '" . $id . "' and password = '" . $password . "'");
+        $records = DB::connection('mysql')->select("select * from users where id = '" . $id . "' and password = '" . $password . "'");
         if (count($records) == 0) {
             return response("処理中に問題が発生しました。<a href='/login'>前のページへ戻る</a>");
         }
@@ -72,7 +72,6 @@ class LoginController extends Controller
         $request->session()->put("login_id", $records[0]->id);
         return response("ログインが完了しました。<a href='/login'>前のページへ戻る</a>");
     }
-
 
     // ログアウト処理
     public function unregister(Request $request)
