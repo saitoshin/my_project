@@ -9,8 +9,6 @@
     </head>
 
 <body>
-    Top Controller!!
-    <?= $sampleValue ?>
 
     <header>
         <a href="/login">
@@ -18,7 +16,10 @@
         </a>
     </header>
     
+    <mail>
+    </main>
 
+    <script src="/js/build/top/index.js"></script>
 </body>
 
 </html>

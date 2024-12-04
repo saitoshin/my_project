@@ -28,7 +28,7 @@ class LoginController extends Controller
 
         // 同一 id の登録が既に存在するかチェックするため、指定された id をもとに DB Record を取得する。
         // select count(*) は where 条件に合致するレコード数を取得する SQL Query。
-        $oldRecords = DB::connection('mysql')->select("select count(*) from users where id_str = '" . $id . "'");
+        $oldRecords = DB::connection('mysql')->select("select count(*) from users where id = '" . $id . "'");
 
         // sql query に失敗している場合、処理失敗として終了する。
         if (count($oldRecords) == 0) {
